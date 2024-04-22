@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>eBOOK - Your Travel Companion</title>
+</head>
+<body>
+
+    <section>
+        <input type="checkbox" id="check">
+        <header>
+            <h2><a href="#" class="logo">eBOOK</a></h2>
+            <div class="navigation">
+                <a href="#" class="sign-up-btn">Sign Up</a>
+            </div>
+            <label for="check">
+                <i class="fas fa-bars menu-btn"></i>
+                <i class="fas fa-times close-btn"></i>
+            </label>
+        </header>
+
+        <div class="content">
+            <div class="info">
+                <h2>The future is here,<br><span>Start exploring!</span></h2>
+                <p>Let us handle your hotel and flight bookings, so you can focus on exploring!</p>
+                <form name="submit-to-google-sheet">
+                    
+                    <input type="text" id="fname" name="Name" placeholder="Enter your name" required>  
+                    <input type="text" id="lname" name="Surname" placeholder="Enter your surname" required> 
+                    <input type="email" id="email" name="Email" placeholder="Enter your email" required>
+
+                    <button type="submit" class="info-btn">Register</button>
+                </form>
+                <span id="message"></span>
+            </div>
+        </div>
+        <div class="media-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </section>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyCqKy2XYSGMS2CSrquXEkGanaY6540Yn-iBfGcARZ-BSROk7Vm_229-kAUcqJ7C3Mfcg/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const message= document.getElementById("message")
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                message.innerHTML = "You have been registered successfully!"
+                setTimeout(function(){
+                    message.innerHTML = ""
+                },5000)
+                form.reset()
+            })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+    
+</body>
+</html>
